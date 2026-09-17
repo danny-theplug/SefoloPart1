@@ -110,5 +110,16 @@ public class Login {
     }
     
     
- 
+    // method to check entered login with the registered
+    public boolean loginUser (String entUsername, String entPassword){
+        
+        if ( userName == entUsername && passwords == entPassword)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    
+   
 }
