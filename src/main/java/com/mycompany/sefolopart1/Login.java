@@ -32,7 +32,7 @@ public class Login {
     // method to validate username
     public boolean checkUserName (String usrName){
     
-        if (usrName.length()<=5 && usrName.contains("_"))
+        if (userName.length()<=5 && userName.contains("_"))
         {
             return true;
         }
@@ -44,7 +44,7 @@ public class Login {
     // method to validate password
     public boolean checkPasswordComplexity (String password){
         
-        if( password.length()< 8)
+        if( passwords.length()< 8)
         {
             return false;
         }
@@ -54,11 +54,11 @@ public class Login {
         boolean hasSpecialCharc = false;
         
         // loop to check every character
-        for (int i = 0; i < password.length(); i++)
+        for (int i = 0; i < passwords.length(); i++)
         {
           // https://www.w3schools.com/java/ref_string_charat.asp w3schools
           
-          char ch = password.charAt(i);
+          char ch = passwords.charAt(i);
           
           //https://www.tutorialspoint.com/java/character_isuppercase.htm TutorialsPoint 
           if (Character.isUpperCase(ch))
@@ -86,7 +86,7 @@ public class Login {
     
     public boolean checkCellPhoneNumber(String phoneNum){
         
-        if ( phoneNum.startsWith("+27") && phoneNum.length() == 12)
+        if ( phoneNumber.startsWith("+27") && phoneNumber.length() == 12)
         {
             return true;
         }
@@ -94,5 +94,21 @@ public class Login {
     }
     
     
+    // method to register the user
+    public String registerUser(){
+      
+        if (!checkUserName (userName))
+        {
+            return " Username is incorrectly formatted";
+        }
+        if (!checkPasswordComplexity (passwords))
+        {
+            return " The password does not meet the complexity requirements ";
+        }
+        
+        return " User has registered successfully ";
+    }
     
+    
+ 
 }
