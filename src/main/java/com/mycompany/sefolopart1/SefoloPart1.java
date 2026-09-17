@@ -29,16 +29,20 @@ public class SefoloPart1 {
         // prompt the user first and last names
         System.out.println(" Enter your firstName: ");
         firstName = input.nextLine();
+        login.fName = firstName;
         
         System.out.println(" Enter your lastName: ");
         lastName = input.nextLine();
+        login.lName = lastName;
         
         // prompt the user
         System.out.println(" Enter your username: ");
         usrName = input.nextLine();
-       
+        login.userName = usrName;
+        
+        
         // check username condtions
-        while ( !checkUserName(usrName) )
+        while ( !login.checkUserName(usrName) )
         {
             System.out.println(" Username is not correctly formatted ");
             System.out.println(" Please ensure your user name contains an underscore (_) ");
@@ -46,6 +50,7 @@ public class SefoloPart1 {
            
             System.out.println(" Enter your username: ");
             usrName = input.nextLine();
+            login.userName = usrName;
             break;
         }
         
@@ -56,9 +61,11 @@ public class SefoloPart1 {
         // prompt user for password
         System.out.println(" Enter your password: ");
         password = input.nextLine();
+        login.passwords = password;
+        
         
         // check password conditions
-        while (!checkPasswordComplexity(password))
+        while (!login.checkPasswordComplexity(password))
         {
             System.out.println(" Password is not correctly formatted ");
             System.out.println(" Ensure that the password contains at least 8 characters ");
@@ -68,6 +75,7 @@ public class SefoloPart1 {
             
             System.out.println(" Enter your password: ");
             password = input.nextLine();
+            login.passwords = password;
             break;
         }
         
@@ -76,15 +84,17 @@ public class SefoloPart1 {
         // cell phone number prompt
         System.out.println(" Enter your cellphone number: +27 ");
         phoneNum = input.nextLine();
+        login.phoneNumber = phoneNum;
         
         // cell phone conditions
-        while (!checkCellPhoneNumber (phoneNum))
+        while (!login.checkCellPhoneNumber (phoneNum))
         {
             System.out.println(" Cell phone number incorrectly formatted ");
             System.out.println(" does not contain international code ");
             
             System.out.println(" Enter your cellphone number: +27 ");
             phoneNum = input.nextLine();
+            login.phoneNumber = phoneNum;
         }
         
         System.out.println (" Cell phone number successfully added ") ;
