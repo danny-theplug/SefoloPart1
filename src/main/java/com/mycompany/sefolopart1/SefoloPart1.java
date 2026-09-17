@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class SefoloPart1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
       
         
         Scanner input = new Scanner (System.in);
@@ -29,6 +29,9 @@ public class SefoloPart1 {
         // prompt the user first and last names
         System.out.println(" Enter your firstName: ");
         firstName = input.nextLine();
+        
+        System.out.println(" Enter your lastName: ");
+        lastName = input.nextLine();
         
         // prompt the user
         System.out.println(" Enter your username: ");
@@ -87,6 +90,11 @@ public class SefoloPart1 {
         System.out.println (" Cell phone number successfully added ") ;
             
             
+        // registration conformation
+        
+        String registerUser();
+        
+        
         
     }
     
