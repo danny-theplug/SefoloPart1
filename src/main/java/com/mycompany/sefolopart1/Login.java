@@ -121,5 +121,14 @@ public class Login {
     }
     
     
-   
+    // method to return login message
+    public String returnLoginStatus (String entUsername, String entPassword){
+        
+        if (loginUser(entUsername,entPassword ))
+        {
+           return " Welcome " + fName + " " + lName + " it is great to see you again "; 
+        }
+        return " Username or password incorrect, please try again ";
+    }
+    
 }
