@@ -17,11 +17,18 @@ public class SefoloPart1 {
       
         
         Scanner input = new Scanner (System.in);
+        Login login = new Login();
         
         // Declaration
         String usrName;
         String password;
         String phoneNum;
+        String firstName;
+        String lastName;
+        
+        // prompt the user first and last names
+        System.out.println(" Enter your firstName: ");
+        firstName = input.nextLine();
         
         // prompt the user
         System.out.println(" Enter your username: ");
@@ -84,69 +91,7 @@ public class SefoloPart1 {
     }
     
     
-    // method to validate username
-    public static boolean checkUserName (String usrName){
     
-        if (usrName.length()<=5 && usrName.contains("_"))
-        {
-            return true;
-        }
-        return false;
-       
-    }
-    
-    
-    // method to validate password
-    public static boolean checkPasswordComplexity (String password){
-        
-        if( password.length()< 8)
-        {
-            return false;
-        }
-        // declarations
-        boolean hasUppercase =false;
-        boolean hasNumber = false;
-        boolean hasSpecialCharc = false;
-        
-        // loop to check every character
-        for (int i = 0; i < password.length(); i++)
-        {
-          // https://www.w3schools.com/java/ref_string_charat.asp w3schools
-          
-          char ch = password.charAt(i);
-          
-          //https://www.tutorialspoint.com/java/character_isuppercase.htm TutorialsPoint 
-          if (Character.isUpperCase(ch))
-          {
-              hasUppercase = true;
-          }
-          else if (Character.isDigit(ch))
-          {
-              hasNumber = true;
-          }
-          else if (!Character.isLetter(ch))
-          {
-              hasSpecialCharc = true;
-          }
-          
-          if (hasUppercase && hasNumber && hasSpecialCharc)
-          {
-              return true;
-          }
-            
-        }
-        return false;
-    }
-    
-    
-    public static boolean checkCellPhoneNumber(String phoneNum){
-        
-        if ( phoneNum.startsWith("+27") && phoneNum.length() == 12)
-        {
-            return true;
-        }
-        return false;
-    }
 }
     
 
