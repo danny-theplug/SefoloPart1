@@ -102,7 +102,19 @@ public class SefoloPart1 {
             
         // registration conformation
         
-        String registerUser();
+        System.out.println(login.registerUser());
+        
+        
+        // login
+        System.out.println(" ------------Login------------ ");
+        
+        System.out.println(" Enter your username to login: ");
+        String loginUsername = input.nextLine();
+        
+        System.out.println(" Enter your password to login: ");
+        String loginPassword = input.nextLine();
+        
+        System.out.println(login.returnLoginStatus(loginUsername, loginPassword));
         
         
         
