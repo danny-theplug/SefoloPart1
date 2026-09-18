@@ -103,14 +103,15 @@ public class Login {
       
         if (!checkUserName (userName))
         {
-            return " Username is incorrectly formatted";
+            return " Username is not correctly formatted; Please ensure your username "
+                    +" contains an underscore and is no more than five characters in length.";
         }
         if (!checkPasswordComplexity (passwords))
         {
-            return " The password does not meet the complexity requirements ";
+            return " Password is not correctly formatted; Please ensure your password  contains at least eigth characters, a capital letter, a number, and a special character ";
         }
         
-        return " User has registered successfully ";
+        return " Username successfully captured. Pasword successfully captured. ";
     }
     
     
@@ -130,9 +131,9 @@ public class Login {
         
         if (loginUser(entUsername,entPassword ))
         {
-           return " Welcome " + fName + " " + lName + " it is great to see you again "; 
+           return " Welcome " + fName + ", " + lName + " it is great to see you again. "; 
         }
-        return " Username or password incorrect, please try again ";
+        return " Username or password incorrect, please try again. ";
     }
     
 }
