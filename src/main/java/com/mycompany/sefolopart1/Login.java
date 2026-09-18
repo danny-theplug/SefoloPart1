@@ -9,11 +9,15 @@ package com.mycompany.sefolopart1;
  * @author user
  */
 public class Login { 
-    String fName;
-    String lName;
-    String userName;
-    String passwords;
-    String phoneNumber;
+     String fName;
+     String lName;
+     String userName;
+     String passwords;
+     String phoneNumber;
+    
+    public Login(){
+        
+    }
     
     
     // login to capture
