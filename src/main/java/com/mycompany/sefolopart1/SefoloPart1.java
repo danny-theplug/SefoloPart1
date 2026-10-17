@@ -117,7 +117,50 @@ public class SefoloPart1 {
         System.out.println(login.returnLoginStatus(loginUsername, loginPassword));
         
         
+        // QuickChat
+        System.out.println(" ----------------- QuickChat---------------");
         
+        System.out.println(" Welcome to QuickChat. ");
+        
+        // menu of the options
+        System.out.println(" Enter 1) Send messages ");
+        System.out.println(" Enter 2) Show recently sent messages 'COMING SOON'. ");
+        System.out.println(" Enter 3) Quit ");
+        
+        // prompt the userto enter a number
+        System.out.println(" Enter a number between 1-3 ");
+        int option;
+        
+        
+        while ( option != 3 && option < 4)
+        {
+          switch (option)
+          {
+              case 1: 
+                  if (messageUsed > maxMessages)
+                  {
+                      System.out.println(" You have already all " + maxMessages + " messages. ");
+                  }
+                  else
+                  {
+                      System.out.println(" Enter the recipient cell phone number: +27 ");
+                      String recipient = input.nextLine();
+                      
+                      Message check = new Message ( recipient, " check ");
+                      while (!check.checkRecipientCell())
+                      {
+                          System.out.println(" Cell phone number not correctly formatted,");
+                          System.out.println(" Ensure that number has no more than 10 characters, ");
+                          System.out.println(" Does not contain international code. ");
+                          
+                          System.out.println(" Enter the recipient cell phone number: +27 ");
+                          recipient = input.nextLine();
+                          check = new Message (recipient, "check");
+                      }
+                      
+                  }
+          }
+        }
     }
     
     
