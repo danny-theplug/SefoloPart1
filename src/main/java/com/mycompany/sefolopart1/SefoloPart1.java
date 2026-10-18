@@ -129,7 +129,7 @@ public class SefoloPart1 {
         
         // prompt the userto enter a number
         System.out.println(" Enter a number between 1-3 ");
-        int option;
+        int option = 0;
         
         
         while ( option != 3 && option < 4)
@@ -177,8 +177,30 @@ public class SefoloPart1 {
                       }
                       System.out.println(" Message sent ");
                       
-                      // choosing what to do with the message
-                      Message message = new Message(recipientCell, text); 
+                      // create the message
+                      Message message = new Message(recipientCell, text);
+                      
+                      // choose what user whats to do with meassage
+                      System.out.println(" 1) Send Message, 2) Disregard Message, 3) Store Message to send later ");
+                      System.out.println(" Choose one of the follwing options: 1, 2, 3. ");
+                      int doingMessage = Integer.parseInt(input.nextLine());
+                      
+                      //loop for wrong option chosen
+                      while ( doingMessage < 1 || doingMessage > 3)
+                      {
+                          System.out.println(" Chose wrong option ");
+                          System.out.println(" Choose between 1,2, or 3 ");
+                          doingMessage = Integer.parseInt(input.nextLine());
+                      }
+                      
+                      System.out.println(" " + message.sentMessage(doingMessage));
+                      
+                      switch (doingMessage)
+                      {
+                          case 1: 
+                              System.out.println(message.printMessage());
+                              messagesUsed++
+                      }
                   }
           }
         }
