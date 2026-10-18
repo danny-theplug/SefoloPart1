@@ -144,9 +144,9 @@ public class SefoloPart1 {
                   else
                   {
                       System.out.println(" Enter the recipient cell phone number: +27 ");
-                      String recipient = input.nextLine();
+                      String recipientCell = input.nextLine();
                       
-                      Message check = new Message ( recipient, " check ");
+                      Message check = new Message ( recipientCell, " check ");
                       while (!check.checkRecipientCell())
                       {
                           System.out.println(" Cell phone number not correctly formatted,");
@@ -154,10 +154,31 @@ public class SefoloPart1 {
                           System.out.println(" Does not contain international code. ");
                           
                           System.out.println(" Enter the recipient cell phone number: +27 ");
-                          recipient = input.nextLine();
-                          check = new Message (recipient, "check");
+                          recipientCell = input.nextLine();
+                          check = new Message (recipientCell, "check");
                       }
                       
+                      // message text
+                      System.out.println(" Enter your message ");
+                      String text = input.nextLine();
+                      
+                      while (text.isEmpty() || text.length() > Message.MaxMessageLength)
+                      {
+                          if (text.isEmpty())
+                          {
+                              System.out.println(" message cannot be empty ");
+                          }
+                          else 
+                          {
+                              System.out.println(" Please enter a message of less than 250 characters. ");
+                          }
+                          System.out.println(" Enter your message ");
+                          text = input.nextLine();
+                      }
+                      System.out.println(" Message sent ");
+                      
+                      // choosing what to do with the message
+                      Message message = new Message(recipientCell, text); 
                   }
           }
         }
