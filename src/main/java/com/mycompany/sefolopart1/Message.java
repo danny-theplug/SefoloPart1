@@ -97,7 +97,7 @@ public class Message {
     private String generateMessageID() {
 
         // Math.random() gives a number from 0 to 1, so this gives a number from 1000000000 to 9999999999
-        long number = (long) (Math.random() * 9000000000L) + 1000000000L;
+        long number = (long) ( Math.random() * 9000000000L) + 1000000000L;
 
         return String.valueOf(number);
     }
@@ -145,9 +145,9 @@ public class Message {
             return "Message ready to send.";
         }
         return "Message exceeds 250 characters by " + (text.length() - 250) + "; please reduce the size.";
-    }
+    } 
 
-
+    // Oracle, 2026. The Java™ Tutorials: Methods. Available at: https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html
     // hash = first two digits of ID : message number : first word + last word (ALL CAPS)
     public String createMessageHash() {
 
@@ -297,7 +297,7 @@ public class Message {
         }
     }
 
-
+    // GeeksforGeeks, 2026. How to Write JSON File in Java. Available at: https://www.geeksforgeeks.org/how-to-write-json-file-in-java/
     // makes text safe to place inside JSON quotes
     private static String escapeJson(String text) {
 
@@ -308,6 +308,7 @@ public class Message {
                    .replace("\t", "\\t");
     }
     
+    // W3Schools, 2026. Java Scanner Class. Available at: https://www.w3schools.com/java/java_user_input.asp
     // keeps asking until the types a whole number 
     public static int readNum(Scanner input){
         int number = 0;
