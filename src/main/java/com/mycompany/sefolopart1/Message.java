@@ -51,7 +51,7 @@ public class Message {
         System.out.println(" Enter the recipient cell number: ");
         recipientCell = input.nextLine();
 
-        while (!checkRecipientCell(recipientCell))
+        while (checkRecipientCell(recipientCell).contains(" incorrectly formattedcelby"))
         {
             System.out.println(" Cell phone number is incorrectly formatted or does not contain an international code; please correct the number and try again. ");
             System.out.println(" Enter the recipient cell number: ");
@@ -91,21 +91,25 @@ public class Message {
     }
 
 
-    // checks the message ID is ten digits long
+    // checks the message ID is not more than ten characters
     public boolean checkMessageID() {
 
-        return messageID != null && messageID.length() == 10;
-    }
-
-
-    // checks the recipient starts with the international code (+27) and is no more than ten characters
-    public boolean checkRecipientCell(String recipient) {
-
-        if (recipient.startsWith("+27") && recipient.length() == 12)
+        if (messageID != null && messageID.length() < 10)
         {
             return true;
         }
         return false;
+    }
+
+
+    // checks the recipient starts with the international code (+27) and is 12 characters long
+    public String checkRecipientCell(String recipient) {
+
+        if (recipient.startsWith("+27") && recipient.length() == 12)
+        {
+            return " Cell phone number successfully captured ";
+        }
+        return " Cell phone number is incorrectly formatted or does not contain an international code; please correct the number and try again. ";
         
     }
 
@@ -113,7 +117,7 @@ public class Message {
     // checks the message is not longer than 250 characters
     public boolean checkMessageLength(String text) {
 
-        if (text.length() < 250)
+        if (text.length() <= 250)
         {
             return true;
         }
@@ -124,17 +128,51 @@ public class Message {
     // hash = first two digits of ID : message number : first word + last word (ALL CAPS)
     public String createMessageHash() {
 
-        String firstTwo = messageID.substring(0, 2);
+        String fstTwo = messageID.substring(0, 2);
 
         String[] words = messageText.trim().split("\\s+");
-        String firstWord = words[0];
-        String lastWord = words[words.length - 1];
+        String fstWord = words[0];
+        String lstWord = words[words.length - 1];
 
-        return (firstTwo + ":" + numMessagesSent + ":" + firstWord + lastWord).toUpperCase();
+        return (fstTwo + ":" + numMessagesSent + ":" + fstWord + lstWord).toUpperCase();
     }
 
 
-    // choose what they want to do with the message
+    // lets the user choose to send, store, or disregard the message
+    public String sentMessage(Scanner input) {
+
+        System.out.println(" 1) Send Message ");
+        System.out.println(" 2) Disregard Message ");
+        System.out.println(" 3) Store Message to send later ");
+        System.out.println(" Choose an option: ");
+        int option = readNum(input);
+
+        while (option < 1 || option > 3)
+        {
+            System.out.println(" Please choose 1, 2 or 3. ");
+            option = readNum(input);
+        }
+
+        String result = sentMessage(option);
+        
+        // disregarding: the message is only deleted once the user presses 0
+        if (option == 2)
+        {
+            System.out.println(" " + result + " ");
+            String answer = input.nextLine();
+
+            while (!answer.equals("0"))
+            {
+                System.out.println(" Press 0 to delete the message ");
+                answer = input.nextLine();
+            }
+        }
+
+        return result;
+    }
+
+
+    // does the option they chose: 1 = send, 2 = disregard, 3 = store
     public String sentMessage(int option) {
 
         switch (option)
@@ -157,6 +195,23 @@ public class Message {
             default:
                 return "Invalid option";
         }
+    }
+
+
+    // returns all the messages sent while the program is running
+    public String printMessages() {
+
+        if (sentMessages.isEmpty())
+        {
+            return "No messages have been sent yet.";
+        }
+
+        String all = "";
+        for (int i = 0; i < sentMessages.size(); i++)
+        {
+            all = all + sentMessages.get(i).printMessage() + "\n\n";
+        }
+        return all;
     }
 
 
@@ -190,7 +245,7 @@ public class Message {
             json.append("  {\n");
             json.append("    \"messageID\": \"").append(escapeJson(m.messageID)).append("\",\n");
             json.append("    \"messageHash\": \"").append(escapeJson(m.messageHash)).append("\",\n");
-            json.append("    \"recipient\": \"").append(escapeJson(m.recipient)).append("\",\n");
+            json.append("    \"recipient\": \"").append(escapeJson(m.recipientCell)).append("\",\n");
             json.append("    \"message\": \"").append(escapeJson(m.messageText)).append("\"\n");
             json.append("  }");
 
@@ -222,5 +277,24 @@ public class Message {
                    .replace("\r", "\\r")
                    .replace("\t", "\\t");
     }
+    
+    // keeps asking until the types a whole number 
+    public static int readNum(Scanner input){
+        int number = 0;
+        boolean isValid = false;
+        
+        while (!isValid)
+        {
+            try
+            {
+                number = Integer.parseInt(input.nextLine().trim());
+                isValid = true; 
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println(" Please enter a number. ");
+            }
+        }
+        return number;
+    }
 }
-
