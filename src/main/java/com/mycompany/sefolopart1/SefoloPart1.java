@@ -122,6 +122,12 @@ public class SefoloPart1 {
         
         System.out.println(" Welcome to QuickChat. ");
         
+        //prompt user how many messages they want to send
+        System.out.println(" How many messages do you wish to enter ");
+        int maxMessages = Message.readNum(input);
+        int usedMessages = 0;
+        boolean totalShow = false;
+        
         // menu of the options
         System.out.println(" Enter 1) Send messages ");
         System.out.println(" Enter 2) Show recently sent messages 'COMING SOON'. ");
@@ -129,7 +135,7 @@ public class SefoloPart1 {
         
         // prompt the userto enter a number
         System.out.println(" Enter a number between 1-3 ");
-        int option = 0;
+        int option = Message.readNum(input);
         
         
         while ( option != 3 && option < 4)
@@ -137,77 +143,60 @@ public class SefoloPart1 {
           switch (option)
           {
               case 1: 
-                  if (messageUsed > maxMessages)
+                  if (usedMessages > maxMessages)
                   {
                       System.out.println(" You have already all " + maxMessages + " messages. ");
                   }
-                  else
+                  else 
                   {
-                      System.out.println(" Enter the recipient cell phone number: +27 ");
-                      String recipientCell = input.nextLine();
+                      // asks for recipient phone number and the message
+                      Message message = new Message (input);
                       
-                      Message check = new Message ( recipientCell, " check ");
-                      while (!check.checkRecipientCell())
-                      {
-                          System.out.println(" Cell phone number not correctly formatted,");
-                          System.out.println(" Ensure that number has no more than 10 characters, ");
-                          System.out.println(" Does not contain international code. ");
-                          
-                          System.out.println(" Enter the recipient cell phone number: +27 ");
-                          recipientCell = input.nextLine();
-                          check = new Message (recipientCell, "check");
-                      }
+                      // send, disregard, store
+                      String result = message.sentMessage(input);
                       
-                      // message text
-                      System.out.println(" Enter your message ");
-                      String text = input.nextLine();
-                      
-                      while (text.isEmpty() || text.length() > Message.MaxMessageLength)
-                      {
-                          if (text.isEmpty())
-                          {
-                              System.out.println(" message cannot be empty ");
-                          }
-                          else 
-                          {
-                              System.out.println(" Please enter a message of less than 250 characters. ");
-                          }
-                          System.out.println(" Enter your message ");
-                          text = input.nextLine();
-                      }
-                      System.out.println(" Message sent ");
-                      
-                      // create the message
-                      Message message = new Message(recipientCell, text);
-                      
-                      // choose what user whats to do with meassage
-                      System.out.println(" 1) Send Message, 2) Disregard Message, 3) Store Message to send later ");
-                      System.out.println(" Choose one of the follwing options: 1, 2, 3. ");
-                      int doingMessage = Integer.parseInt(input.nextLine());
-                      
-                      //loop for wrong option chosen
-                      while ( doingMessage < 1 || doingMessage > 3)
-                      {
-                          System.out.println(" Chose wrong option ");
-                          System.out.println(" Choose between 1,2, or 3 ");
-                          doingMessage = Integer.parseInt(input.nextLine());
-                      }
-                      
-                      System.out.println(" " + message.sentMessage(doingMessage));
-                      
-                      switch (doingMessage)
-                      {
-                          case 1: 
-                              System.out.println(message.printMessage());
-                              messagesUsed++
-                      }
+                      // the disregard message is already shown while waiting for 0
+                            if (!result.equals("Press 0 to delete the message"))
+                            {
+                                System.out.println(" " + result + " ");
+                            }
+                            
+                            if (result.equals("Message successfully sent"))
+                            {
+                                System.out.println(message.printMessage());
+                            }
+                            
+                            usedMessages++;
+                            
+                            // total is shown once all the messages have been entered
+                            if (usedMessages == maxMessages)
+                            {
+                                System.out.println(" Total messages sent: " + Message.returnTotalMessages());
+                                totalShow = true;
+                            }
+                        }
+                        break;
+                        
+              case 2:
+                  System.out.println(" Coming Soon ");
+                  
+              case 3: 
+                  if (!totalShow)
+                  {
+                      System.out.println(" Total messages sent: " + Message.returnTotalMessages());
                   }
+                  
+              default:
+                  System.out.println(" Enter a number between 1-3 ");
+            }
+                 
+          
           }
         }
     }
     
     
     
-}
+
     
 
