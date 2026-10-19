@@ -44,6 +44,17 @@ public class Message {
     }
     
     
+    // constructor with a known ID and message number - used by the unit tests
+    public Message(String messageID, int numMessagesSent, String recipientCell, String messageText) {
+
+        this.messageID = messageID;
+        this.numMessagesSent = numMessagesSent;
+        this.recipientCell = recipientCell;
+        this.messageText = messageText;
+        this.messageHash = createMessageHash();
+    }
+    
+    
   // constructor that uses the Scanner to ask the user for the recipient and the message
     public Message(Scanner input) {
 
@@ -51,12 +62,13 @@ public class Message {
         System.out.println(" Enter the recipient cell number: ");
         recipientCell = input.nextLine();
 
-        while (checkRecipientCell(recipientCell).contains(" incorrectly formattedcelby"))
+        while (!checkRecipientCell(recipientCell).equals("Cell phone number successfully captured."))
         {
-            System.out.println(" Cell phone number is incorrectly formatted or does not contain an international code; please correct the number and try again. ");
+            System.out.println(" " + checkRecipientCell(recipientCell) + " ");
             System.out.println(" Enter the recipient cell number: ");
             recipientCell = input.nextLine();
         }
+        System.out.println(" " + checkRecipientCell(recipientCell) + " ");
 
         // message
         System.out.println(" Enter your message: ");
@@ -94,7 +106,7 @@ public class Message {
     // checks the message ID is not more than ten characters
     public boolean checkMessageID() {
 
-        if (messageID != null && messageID.length() < 10)
+        if (messageID != null && messageID.length() <= 10)
         {
             return true;
         }
@@ -107,9 +119,9 @@ public class Message {
 
         if (recipient.startsWith("+27") && recipient.length() == 12)
         {
-            return " Cell phone number successfully captured ";
+            return "Cell phone number successfully captured.";
         }
-        return " Cell phone number is incorrectly formatted or does not contain an international code; please correct the number and try again. ";
+        return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
         
     }
 
@@ -125,14 +137,25 @@ public class Message {
     }
 
 
+    // returns the message for the length check
+    public String checkMessageLengthStatus(String text) {
+
+        if (text.length() <= 250)
+        {
+            return "Message ready to send.";
+        }
+        return "Message exceeds 250 characters by " + (text.length() - 250) + "; please reduce the size.";
+    }
+
+
     // hash = first two digits of ID : message number : first word + last word (ALL CAPS)
     public String createMessageHash() {
 
         String fstTwo = messageID.substring(0, 2);
 
         String[] words = messageText.trim().split("\\s+");
-        String fstWord = words[0];
-        String lstWord = words[words.length - 1];
+        String fstWord = words[0].replaceAll("[^A-Za-z0-9]", "");
+        String lstWord = words[words.length - 1].replaceAll("[^A-Za-z0-9]", "");
 
         return (fstTwo + ":" + numMessagesSent + ":" + fstWord + lstWord).toUpperCase();
     }
@@ -163,7 +186,7 @@ public class Message {
 
             while (!answer.equals("0"))
             {
-                System.out.println(" Press 0 to delete the message ");
+                System.out.println(" Press 0 to delete the message. ");
                 answer = input.nextLine();
             }
         }
@@ -181,16 +204,16 @@ public class Message {
                 sentMessages.add(this);
                 totalMessagesSent++;
                 messageCounter++;
-                return "Message successfully sent";
+                return "Message successfully sent.";
 
             case 2:
-                return "Press 0 to delete the message";
+                return "Press 0 to delete the message.";
 
             case 3:
                 storedMessages.add(this);
                 messageCounter++;
                 storeMessage();
-                return "Message successfully stored";
+                return "Message successfully stored.";
 
             default:
                 return "Invalid option";
@@ -222,6 +245,13 @@ public class Message {
                 + "Message Hash: " + messageHash + "\n"
                 + "Recipient: " + recipientCell + "\n"
                 + "Message: " + messageText;
+    }
+
+
+    // returns the message ID message
+    public String returnMessageID() {
+
+        return "Message ID generated: " + messageID;
     }
 
 
