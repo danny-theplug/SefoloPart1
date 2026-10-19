@@ -116,6 +116,7 @@ public class SefoloPart1 {
         
         System.out.println(login.returnLoginStatus(loginUsername, loginPassword));
         
+        if (login.loginUser(loginUsername, loginPassword))
         
         // QuickChat
         System.out.println(" ----------------- QuickChat---------------");
@@ -179,12 +180,14 @@ public class SefoloPart1 {
                         
               case 2:
                   System.out.println(" Coming Soon ");
+                  break;
                   
               case 3: 
                   if (!totalShow)
                   {
                       System.out.println(" Total messages sent: " + Message.returnTotalMessages());
                   }
+                  break;
                   
               default:
                   System.out.println(" Enter a number between 1-3 ");
