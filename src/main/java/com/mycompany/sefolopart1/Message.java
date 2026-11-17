@@ -6,7 +6,6 @@ package com.mycompany.sefolopart1;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,20 +16,18 @@ public class Message {
     
 
     // details of ONE message
-    private String messageID;
-    private int numMessagesSent;
-    private String recipientCell;
-    private String messageText;
-    private String messageHash;
+    String messageID;
+    int numMessagesSent;
+    String recipientCell;
+    String messageText;
+    String messageHash;
     
     
      // number given to the next message (starts at 0)
     private static int messageCounter = 0;
     
     // how many messages were actually sent
-    private static int totalMessagesSent = 0;   
-    private static ArrayList<Message> sentMessages = new ArrayList<>();
-    private static ArrayList<Message> storedMessages = new ArrayList<>();
+    static int totalMessagesSent = 0;   
     
 
     // constructor - builds a message and gives it an ID, a number and a hash
@@ -201,16 +198,20 @@ public class Message {
         switch (option)
         {
             case 1:
-                sentMessages.add(this);
+                StoredMessages.sentMessages.add(this);
+                StoredMessages.addHashAndID(this);
                 totalMessagesSent++;
                 messageCounter++;
                 return "Message successfully sent.";
 
             case 2:
+                StoredMessages.disregardedMessages.add(this);
+                StoredMessages.addHashAndID(this);
                 return "Press 0 to delete the message.";
 
             case 3:
-                storedMessages.add(this);
+                StoredMessages.storedMessages.add(this);
+                StoredMessages.addHashAndID(this);
                 messageCounter++;
                 storeMessage();
                 return "Message successfully stored.";
@@ -224,15 +225,15 @@ public class Message {
     // returns all the messages sent while the program is running
     public String printMessages() {
 
-        if (sentMessages.isEmpty())
+        if (StoredMessages.sentMessages.isEmpty())
         {
             return "No messages have been sent yet.";
         }
 
         String all = "";
-        for (int i = 0; i < sentMessages.size(); i++)
+        for (int i = 0; i < StoredMessages.sentMessages.size(); i++)
         {
-            all = all + sentMessages.get(i).printMessage() + "\n\n";
+            all = all + StoredMessages.sentMessages.get(i).printMessage() + "\n\n";
         }
         return all;
     }
@@ -268,9 +269,9 @@ public class Message {
         StringBuilder json = new StringBuilder();
         json.append("[\n");
 
-        for (int i = 0; i < storedMessages.size(); i++)
+        for (int i = 0; i < StoredMessages.storedMessages.size(); i++)
         {
-            Message m = storedMessages.get(i);
+            Message m = StoredMessages.storedMessages.get(i);
 
             json.append("  {\n");
             json.append("    \"messageID\": \"").append(escapeJson(m.messageID)).append("\",\n");
@@ -279,7 +280,7 @@ public class Message {
             json.append("    \"message\": \"").append(escapeJson(m.messageText)).append("\"\n");
             json.append("  }");
 
-            if (i < storedMessages.size() - 1)
+            if (i < StoredMessages.storedMessages.size() - 1)
             {
                 json.append(",");
             }
@@ -296,6 +297,7 @@ public class Message {
             System.out.println(" Could not write the JSON file: " + e.getMessage());
         }
     }
+
 
     // GeeksforGeeks, 2026. How to Write JSON File in Java. Available at: https://www.geeksforgeeks.org/how-to-write-json-file-in-java/
     // makes text safe to place inside JSON quotes
