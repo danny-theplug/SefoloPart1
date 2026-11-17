@@ -16,7 +16,7 @@ public class LoginTest {
         login.lName = "Smith";
     }
 
-    // ---------- Username tests ----------
+    // Username tests 
 
     @Test
     public void testUsername_CorrectlyFormatted() {
@@ -30,7 +30,7 @@ public class LoginTest {
         assertFalse(login.checkUserName(login.userName));
     }
 
-    // ---------- Password tests ----------
+    //  Password tests
 
     @Test
     public void testPassword_MeetsComplexity() {
@@ -44,7 +44,7 @@ public class LoginTest {
         assertFalse(login.checkPasswordComplexity(login.passwords));
     }
 
-    // ---------- Cell phone tests ----------
+    //  Cell phone tests 
 
     @Test
     public void testCellPhone_CorrectlyFormatted() {
@@ -58,7 +58,7 @@ public class LoginTest {
         assertFalse(login.checkCellPhoneNumber(login.phoneNumber));
     }
 
-    // ---------- registerUser() message tests ----------
+    //  registerUser() message tests 
 
     @Test
     public void testRegisterUser_UsernameFail() {
@@ -88,7 +88,7 @@ public class LoginTest {
                 login.registerUser());
     }
 
-    // ---------- Login tests ----------
+    //  Login tests 
 
     @Test
     public void testLogin_Successful() {
